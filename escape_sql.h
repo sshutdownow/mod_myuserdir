@@ -12,9 +12,9 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-
-  $Id: escape_sql.h 23 2007-08-05 20:04:03Z igor_popov $
-
+  
+  $Id: escape_sql.h 27 2007-08-05 20:10:51Z igor_popov $
+  
 */
 
 #ifndef __ESCAPE_SQL_H__

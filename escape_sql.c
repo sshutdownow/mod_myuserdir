@@ -12,12 +12,12 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-
-  $Id: escape_sql.c 22 2007-08-05 20:03:49Z igor_popov $
-  
 */
 
+static const char cvsid[] = "$Id: escape_sql.c 27 2007-08-05 20:10:51Z igor_popov $";
+
 #include "escape_sql.h"
+
 
 size_t escape_sql(const char *from, const size_t from_length, char *to, const size_t to_length)
 {

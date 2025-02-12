@@ -1,7 +1,7 @@
 /*
-* Copyright (c) 2005-2007 Igor Popov <igorpopov@newmail.ru> 
+* Copyright (c) 2005 Igor Popov <igorpopov@newmail.ru> 
 *
-* $Id: tilde_users.sql 25 2007-08-05 20:04:51Z igor_popov $
+* $Id: tilde_users.sql 27 2007-08-05 20:10:51Z igor_popov $
 *
 */
 

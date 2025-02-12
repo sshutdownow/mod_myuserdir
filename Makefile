@@ -1,15 +1,15 @@
 #
 # Copyright (c) 2005-2007 Igor Popov <igorpopov@newmail.ru>
 #
-# $Id: Makefile 17 2007-08-05 19:59:11Z igor_popov $
+# $Id: Makefile 31 2008-06-11 09:08:22Z igor_popov $
 #
 
 NAME = myuserdir
 APACHE_MODULE = mod_myuserdir.so
 APXS = apxs
 
-SRCS = mod_myuserdir.c ap_hash.c escape_sql.c
-OBJS = mod_myuserdir.o ap_hash.o escape_sql.o
+SRCS = mod_myuserdir.c mod_myuserdir_php.c escape_sql.c
+OBJS = mod_myuserdir.o mod_myuserdir_php.o escape_sql.o
 
 RM = rm -f
 LN = ln -sf
@@ -35,4 +35,4 @@ install: all
 	$(APXS) -i -a -n $(NAME) $(APACHE_MODULE)
 
 clean:
-	$(RM) $(OBJS) $(APACHE_MODULE)
+	$(RM) $(OBJS) $(APACHE_MODULE) *.lo *.slo mod_myuserdir.la

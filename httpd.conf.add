@@ -1,7 +1,7 @@
 #
-# Copyright (c) 2005 Igor Popov <igorpopov@newmail.ru>
+# Copyright (c) 2005-2006 Igor Popov <igorpopov@newmail.ru>
 # 
-# $Id: httpd.conf.add 26 2007-08-05 20:05:10Z igor_popov $
+# $Id: httpd.conf.add 27 2007-08-05 20:10:51Z igor_popov $
 #
 # to work properly mod_myuserdir.c should be loaded after php4 module
 #
