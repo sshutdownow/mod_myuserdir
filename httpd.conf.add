@@ -5,22 +5,20 @@
 #
 # to work properly mod_myuserdir.c should be loaded after php4 module
 #
-LoadModule php4_module        libexec/apache/libphp4.so
+# LoadModule php4_module        libexec/apache/libphp4.so
 LoadModule myuserdir_module   libexec/apache/mod_myuserdir.so
 #...
-AddModule mod_php4.c
+# AddModule mod_php4.c
 AddModule mod_myuserdir.c
 #...
 #
 <IfModule mod_myuserdir.c>
-	MyUserOn		on
-	MyUserDbHost		localhost
-	MyUserDbSocket		/tmp/mysql.sock
-	MyUserDbUser		"nonpriv"
-	MyUserDbPass		"M3Ga PaSsVVd"
-	MyUserDbName		"hosting"
-	MyUserQuery		"SELECT CONCAT('homedir', 'doc_root'), CONCAT('upload_tmp_dir=homedir/.tmp;', extra_php_config) FROM users WHERE username='%s' AND enabled='yes' LIMIT 1"
-	
+	MyUserOn	on
+	DBDPersist	On
+	DBDriver	mysql
+	DBDParams	"host=localhost dbname=hosting user=nonpriv pass=M3Ga_PaSsVVd"
+	MyUserQuery	"SELECT CONCAT('homedir', 'doc_root'), CONCAT('upload_tmp_dir=homedir/.tmp;', extra_php_config) FROM tilde_users WHERE username='%s' AND enabled='yes' LIMIT 1"
+
 	<Directory "/usr/local/www/homedirs">
 	    Options Indexes
 	    AllowOverride None
