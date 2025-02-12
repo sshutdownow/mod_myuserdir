@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations
  * under the License.
  *
- * $Id: mod_myuserdir_php.h 27 2007-08-05 20:10:51Z igor_popov $
+ * $Id: mod_myuserdir_php.h 38 2008-07-15 07:27:33Z igor_popov $
  *
  */
 
@@ -34,8 +34,8 @@
 #define PHP_INI_STAGE_RUNTIME           (1<<4)
 
 __BEGIN_DECLS
-int zend_alter_ini_entry(const char *, size_t, const char *, size_t, int, int);
-int zend_restore_ini_entry(const char *, size_t, int);
+int zend_alter_ini_entry(const char *, unsigned int, const char *, unsigned int, int, int);
+int zend_restore_ini_entry(const char *, unsigned int, int);
 __END_DECLS
 
 #endif /* __MOD_MYUSERDIR_PHP_H__ */
