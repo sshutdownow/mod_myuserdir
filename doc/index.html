@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="eng">
+
+    <head>
+	<link rel="stylesheet" type="text/css" href="../my.css" title="webstyle" />
+	<title>mod_myuserdir</title>
+    </head>
+
+    <body>
+	<h1 id="logo">mod_myuserdir</h1>
+	<div class="navigation">
+	    main
+	    | <a href="download.html">download</a>
+	    | <a href="documentation.html">documentation</a>
+	    | <a href="changelog.html">changelog</a>
+	</div>
+
+	<div class="line"></div>
+
+	<div class="mainbody">
+
+	    <em>mod_myuserdir</em> is <a href="http://httpd.apache.org/">Apache 1.3.xx</a> module for dynamically configured mass userdirs with <a href="http://www.php.net/">php</a>, all configurations are stored in MySQL database.
+
+		<ul>
+		<li>
+		    No need to have every user in system userbase (/etc/passwd), no need to restart apache after configuration changed (homedir changed, user [un]blocked...).
+		</li>
+
+		<li>
+    		    After all, it is capable to change settings of PHP4 dynamically (if php is loadable module or it is linked with apache) for any user. By default, it sets open_basedir as homedir to prevent user from stoling files from other users and from your server, but you have ability to  change almost any parameter that exists in php.ini, for example, you can turn on safe_mode or register_globals for particular user, if it has old php scripts that use global variables.
+		</li>
+
+		<li>
+		     Module is redistributed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>.
+		</li>
+	    
+	    </ul>
+	</div>
+
+	<div class="line"></div>
+
+	<div class="copyright">Copyright &copy; 2005-2006
+		<a href="mailto:igorpopov@newmail.ru">Igor Popov</a>
+	</div>
+    </body>
+</html>

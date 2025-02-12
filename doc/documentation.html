@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="eng">
+<head>
+	<link rel="stylesheet" type="text/css" href="../my.css" title="webstyle" />
+	<title>mod_myuserdir</title>
+</head>
+<body>
+    <h1 id="logo">mod_myuserdir</h1>
+ 
+	<div class="navigation">
+	      <a href="index.html">main</a>
+	    | <a href="download.html">download</a>
+	    | documentation
+	    | <a href="changelog.html">changelog</a>
+	</div>
+
+	<div class="line"></div>
+
+	<div class="mainbody">
+ 	<h3><a hRef='download.html'>Stable version</a>: 0.99.3</h3>
+	
+	<h3>Installation instructions:</h3>
+	<h4>Prerequisities:</h4>
+	    This packages are required for successufull compilation:
+	    <table border='0'>
+		<tr><td>apache13-dev</td></tr>
+		<tr><td>mysql-dev</td></tr>
+	    </table>
+	<h4>Download source code:</h4>
+	    The latest version of mod_myuserdir <a hRef='download.html'>is here</a>	    
+	<h4>Building mod_myuserdir:</h4>
+    	    just type <code>make</code>
+	    <p>
+	    If you do not want php support than remove -DWITH_PHP from CFLAGS in
+	    Makefile. If you want to test module's internal caching than add
+	    -DWITH_CACHE to CFLAGS in Makefile.
+	    </p>			     
+	<h4>Install mod_myuserdir:</h4>
+	    <code>make install</code> (as root)
+	<h4>MySQL:</h4>
+	    Now we create database that will store user's names their homedirs and php settings.
+	    <pre>
+CREATE DATABASE `hosting`;
+USE `hosting`;
+
+CREATE TABLE `tilde_users` (
+    `username` varchar(255) NOT NULL default '',
+    `homedir` varchar(255) NOT NULL default '',
+    `enabled` enum('yes','no') NOT NULL default 'no',
+    `extra_php_config` text,
+    UNIQUE KEY  (`username`),
+    KEY (`enabled`)
+) ENGINE=MyISAM COMMENT='hosting ~users';
+
+GRANT SELECT ON hosting.tilde_users TO 'nonpriv'@'localhost' IDENTIFIED BY 'M3Ga PaSsVVd';
+
+INSERT INTO `tilde_users` VALUES ('igor', '/var/www/homedirs/igor', 'yes', 'safe_mode=1');
+INSERT INTO `tilde_users` VALUES ('someone', '/var/www/homedirs/someone', 'no', 'engine=0');
+	    </pre>
+	    Edit file tilde_users.sql and create apropriate database and tables:
+	    <br />
+	    <code>mysql -u root -p &lt; tilde_users.sql</code>
+	<h4>Apache:</h4>	    
+	    Edit apache config, you may use httpd.conf.add as example, make shure that mod_myuserdir.so
+	    is loaded after libphp4.so.
+	    <pre>
+LoadModule php4_module        libexec/apache/libphp4.so
+LoadModule myuserdir_module   libexec/apache/mod_myuserdir.so
+#...
+AddModule mod_php4.c
+AddModule mod_myuserdir.c
+#...
+#
+&lt;IfModule mod_myuserdir.c&gt;
+        MyUserOn	on
+	MyUserDbHost	"localhost"
+	MyUserDbSocket	"/tmp/mysql.sock"
+	MyUserDbUser	"nonpriv"
+	MyUserDbPass	"M3Ga PaSsVVd"
+	MyUserDbName	"hosting"
+	MyUserQuery	"SELECT homedir,extra_php_config FROM users WHERE username='%s' AND enabled='yes'"
+#	If compiled with cache support
+#	MyUserCacheOn	on
+#	MyUserTTLPositive 600
+#	MyUserTTLNegative 120
+#
+&lt;IfModule&gt;
+	    </pre>
+	    The most important parameter that you should take into account is <em>MyUserQuery</em>,
+	    it must contain only one %s that is substituted by username that is taken from http request http://www.yourhost.domain/~username/some/path.
+	    <p>
+	    The module expects MySQL to return up to two fields:
+		the first one is treated as absolute path of userdir (magically becomes <em>open_basedir</em>) and
+		the second (if exist) is pairs of php variables and their values delimeted by equality sign,
+		pairs in turn are separated by semicolon, for boolean variables you should use 1 and 0.
+	    </p>
+	<h4>Make it all working:</h4>
+	    Just restart apache:
+	    <br />
+	    <code>apachectl stop; apachectl start</code>
+	    <br />
+	    So, it should work now.
+	    <br />
+	    This module is tested to compile and work on FreeBSD and Linux with MySQL 4.[01].xx and 5.0.xx.
+	<h4>TODO</h4>
+	    <p>
+	    MySQL flushes query cache whenever that table is changed. If updates
+	    are often, peformane decrease significantly, to achive good perfomance,
+	    module should use caching of MySQL responses (positive and negative).
+	    </p>
+	    <p>
+	    At present time module already has ability of internal caching, so,
+	    next step will be support for global caching.
+	    </p>
+	</div>
+	<div class="line"></div>
+	<div class="copyright">Copyright &copy; 2005-2007
+		<a href="mailto:igorpopov@newmail.ru">Igor Popov</a>
+	</div>
+<!--
+	<div class="copyright">
+	<h4>License and Copyright:</h4>
+<pre>
+Copyright &copy; 2005 Igor Popov &lt;<a hRef='mailto:igorpopov@newmail.ru'>igorpopov@newmail.ru</a>&gt;
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</pre>
+	</div>
+-->
+</body>
+</html>
